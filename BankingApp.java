@@ -56,6 +56,80 @@ public class BankingApp{
                         case 7: System.out.println(CLEAR); System.exit(0);
                         default: continue;
                     }
+                    break;
+                    case CREATE_ACCOUNT:
+                    String id;
+                    String name;
+                    int deposit;
+                    boolean valid;
+
+                    // ID Validation
+                    do {
+                        valid = true;
+                        System.out.print("\tEnter New Customer ID: ");  // SDB-dhvshgc
+                        id = SCANNER.nextLine().toUpperCase().strip();
+                        if (id.isBlank()){
+                            System.out.printf(ERROR_MSG, "ID can't be empty");
+                            valid = false;
+                        }else if (!id.startsWith("SDB-") || id.length() < 5){
+                            System.out.printf(ERROR_MSG, "Invalid ID format");
+                            valid = false;
+                        }else{
+                            String number = id.substring(5);
+                            for (int i = 0; i < number.length(); i++) {
+                                if (!Character.isDigit(number.charAt(i))){
+                                    System.out.printf(ERROR_MSG, "Invalid ID format");
+                                    valid = false;
+                                    break;
+                                }
+                            }
+                            for (int i = 0; i < accounts.length; i++) {
+                                if (accounts[i].equals(id)){
+                                    System.out.printf(ERROR_MSG, "Account ID already exists");
+                                    valid = false;
+                                    break;
+                                }
+                            }    
+                        }
+                    }while (!valid);
+                    // Name Validation
+                    do{
+                        valid = true;
+                        System.out.print("\tEnter Account Name: ");
+                        name = SCANNER.nextLine().strip();
+                        if (name.isBlank()){
+                            System.out.printf(ERROR_MSG, "Account name can't be empty");
+                            valid = false;
+                            continue;
+                        }
+                        for (int i = 0; i < name.length(); i++) {
+                            if (!(Character.isLetter(name.charAt(i)) || 
+                                Character.isSpaceChar(name.charAt(i))) ) {
+                                System.out.printf(ERROR_MSG, "Invalid name");
+                                valid = false;
+                                break;
+                            }
+                        }
+                    }while(!valid);
+
+
+                    do {
+                        System.out.println();
+                        System.out.print("Enter your Deposit Amount Here :");
+                        deposit = SCANNER.nextInt();
+                        SCANNER.nextLine();
+
+                        if (deposit > 5000) {
+                            System.out.println("Initial Deposit :" + deposit);
+                            System.out.println();
+                            System.out.printf(SUCCESS_MSG, 
+                            String.format("%s:%s Account has been Created successfully", id, name));
+                        } else {
+
+                            System.out.printf(ERROR_MSG, "Not Sufficient Amount In Your A/C");
+                        }
+                    } while (!valid);
+                    
 
     }
 }

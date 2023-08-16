@@ -129,7 +129,31 @@ public class BankingApp{
                             System.out.printf(ERROR_MSG, "Not Sufficient Amount In Your A/C");
                         }
                     } while (!valid);
-                    
+                    String[][] tempAccounts = new String[accounts.length + 1][3];
 
+                    for (int i = 0; i < accounts.length; i++) {
+                        tempAccounts[i] = accounts[i];
+                    }
+                    
+                    tempAccounts[tempAccounts.length - 1][0] = id;
+                    tempAccounts[tempAccounts.length - 1][1] = name;
+                    tempAccounts[tempAccounts.length - 1][2] = Integer.toString(deposit); // Convert int to String
+                    
+                    accounts = tempAccounts;
+                    
+                    System.out.println();
+                    System.out.printf(SUCCESS_MSG, String.format("%s:%s added successfully \n", id, name));
+                    System.out.print("\tDo you want to continue adding (Y/n)? ");
+                    if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
+                    screen = DASHBOARD;
+                    break;
+
+            }
+    
+        }while(true);
     }
 }
+
+
+
+    
